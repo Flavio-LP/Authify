@@ -92,6 +92,7 @@ PG_USER = "your_user"
 PG_PASSWORD = "your_password"
 PG_DATABASE = "your_database"
 PG_SCHEMA = "your_schema"
+DEVISE_JWT_SECRET_KEY = "your secret key"
 ```
 
 ### 5. Inicie o servidor
@@ -113,10 +114,10 @@ A API estará disponível em `http://localhost:3000`
 │   Cliente   │
 └──────┬──────┘
        │
-       │ POST /auth/signup
+       │ POST /users
        ├──────────────────────────────────┐
        │                                  │
-       │ POST /auth/login                 ▼
+       │ POST /users/ sign_in             ▼
        ├────────────────────────────► ┌──────────────┐
        │                              │  Rails API   │
        │ ◄────────────────────────────┤  + Devise    │
@@ -159,10 +160,10 @@ A API estará disponível em `http://localhost:3000`
 | `id` | bigint | Primary key |
 | `email` | string | Email único (index) |
 | `encrypted_password` | string | Senha criptografada (Devise) |
-| `jti` | string | JWT ID único (index) |
-| `name` | string | Nome do usuário (opcional) |
 | `created_at` | datetime | Data de criação |
 | `updated_at` | datetime | Data de atualização |
+| `jti` | string | JWT ID único (index) |
+| `name` | string | Nome do usuário (opcional) |
 
 ### Tabela `jwt_denylist`
 
@@ -179,7 +180,7 @@ A API estará disponível em `http://localhost:3000`
 
 ### 🌐 Públicos
 
-#### `POST /auth/signup`
+#### `POST /users`
 Cria novo usuário.
 
 **Request:**
@@ -188,6 +189,7 @@ Cria novo usuário.
   "user": {
     "email": "user@example.com",
     "password": "senha123",
+    "password_confirmation": "senha123",
     "name": "João Silva"
   }
 }
@@ -197,6 +199,7 @@ Cria novo usuário.
 ```json
 {
   "message": "Usuário criado com sucesso",
+  "token" : "your token",
   "user": {
     "id": 1,
     "email": "user@example.com",
@@ -207,7 +210,7 @@ Cria novo usuário.
 
 ---
 
-#### `POST /auth/login`
+#### `POST /users/sign_in`
 Autentica usuário e retorna JWT.
 
 **Request:**
