@@ -34,7 +34,7 @@ gem "thruster", require: false
 
 gem 'dotenv-rails'
 
-gem 'devise-jwt', '~> 0.11.0'
+gem 'devise-jwt', '~> 0.12.1'
 gem 'rack-cors'
 
 gem 'rswag'
