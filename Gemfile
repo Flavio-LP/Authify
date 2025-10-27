@@ -37,6 +37,11 @@ gem 'dotenv-rails'
 gem 'devise-jwt', '~> 0.11.0'
 gem 'rack-cors'
 
+gem 'rswag'
+gem 'rswag-api'
+gem 'rswag-ui'
+gem 'rswag-specs'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

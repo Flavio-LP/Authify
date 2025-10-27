@@ -1,48 +1,37 @@
-require 'rails_helper'
+require 'swagger_helper'
 
-RSpec.describe 'Sessions', type: :request do
-  let(:user) { create(:user) }
+RSpec.describe 'Sessions API', type: :request do
+  path '/users/sign_in' do
+    post 'Sign in' do
+      tags 'Authentication'
+      consumes 'application/json'
+      produces 'application/json'
 
-  describe 'POST /users/sign_in' do
-    context 'with valid credentials' do
-      it 'returns success status' do
-        post user_session_path, params: {
+      parameter name: :user, in: :body, schema: {
+        type: :object,
+        properties: {
           user: {
-            email: user.email,
-            password: user.password
+            type: :object,
+            properties: {
+              email: { type: :string },
+              password: { type: :string }
+            },
+            required: ['email', 'password']
           }
         }
-        expect(response).to have_http_status(:success)
+      }
+
+      response '200', 'user signed in' do
+        let(:user) { create(:user) }
+        let(:user) { { user: { email: user.email, password: 'password123' } } }
+        run_test!
+      end
+
+      response '401', 'invalid credentials' do
+        let(:user) { { user: { email: 'wrong@email.com', password: 'wrong' } } }
+        run_test!
       end
     end
   end
-
-
-      it 'returns JWT token in header' do
-        post user_session_path, params: {
-          user: {
-            email: user.email,
-            password: user.password
-          }
-        }
-        expect(response.headers['Authorization']).to be_present
-      end
-
-
-    context 'with invalid credentials' do
-      it 'returns unauthorized status' do
-        post user_session_path, params: {
-          user: {
-            email: user.email,
-            password: 'wrong_password'
-          }
-        }
-        expect(response).to have_http_status(:unauthorized)
-      end
-    end
-
-
-
-
-
 end
+
