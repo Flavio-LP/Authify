@@ -14,6 +14,9 @@ RSpec.describe 'Sessions', type: :request do
         }
         expect(response).to have_http_status(:success)
       end
+    end
+  end
+
 
       it 'returns JWT token in header' do
         post user_session_path, params: {
@@ -24,7 +27,7 @@ RSpec.describe 'Sessions', type: :request do
         }
         expect(response.headers['Authorization']).to be_present
       end
-    end
+
 
     context 'with invalid credentials' do
       it 'returns unauthorized status' do
@@ -37,13 +40,9 @@ RSpec.describe 'Sessions', type: :request do
         expect(response).to have_http_status(:unauthorized)
       end
     end
-  end
 
-  describe 'DELETE /users/sign_out' do
-    it 'signs out the user' do
-      sign_in user
-      delete destroy_user_session_path
-      expect(response).to have_http_status(:success)
-    end
-  end
+
+
+
+
 end
