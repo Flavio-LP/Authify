@@ -58,7 +58,7 @@ group :development, :test do
 
   gem 'capybara', '~> 3.39'
   gem 'selenium-webdriver', '~> 4.15'
-  gem 'shoulda-matchers', '~> 6.0'
+  gem 'shoulda-matchers', '~> 7.0'
   gem 'database_cleaner-active_record', '~> 2.1'
   gem 'simplecov', require: false
 end
