@@ -32,7 +32,4 @@ paths:
                   - email
                   - password
 servers:
-- url: https://{defaultHost}
-  variables:
-    defaultHost:
-      default: www.example.com
+- url: https://devtechrails.com/authify

@@ -6,7 +6,7 @@ services:
     env_file: .env
     networks:
       - shared_db
-    command: sh -c "bundle exec rails db:prepare && ./bin/thrust ./bin/rails server"
+    command: sh -c "bundle exec rails db:prepare && (bundle exec rails rswag:specs:swaggerize || true) && ./bin/thrust ./bin/rails server"
 
 networks:
   shared_db:
