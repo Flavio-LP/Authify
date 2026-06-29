@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require_relative "../app/middleware/script_name_middleware"
 
 Bundler.require(*Rails.groups)
 
@@ -13,5 +14,6 @@ module Authify
     config.session_store :cookie_store, key: '_authify_session'
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use config.session_store, config.session_options
+    config.middleware.insert_before 0, ScriptNameMiddleware
   end
 end

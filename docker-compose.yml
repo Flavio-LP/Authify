@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3005:80"
+    env_file: .env
+    networks:
+      - shared_db
+    command: sh -c "bundle exec rails db:prepare && ./bin/thrust ./bin/rails server"
+
+networks:
+  shared_db:
+    external: true

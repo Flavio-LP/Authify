@@ -90,9 +90,11 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: authify_production
-    username: authify
-    password: <%= ENV["AUTHIFY_DATABASE_PASSWORD"] %>
+    database: <%= ENV["PG_DATABASE"] %>
+    username: <%= ENV["PG_USER"] %>
+    password: <%= ENV["PG_PASSWORD"] %>
+    host: <%= ENV.fetch("PG_HOST", "localhost") %>
+    port: <%= ENV.fetch("PG_PORT", "5432") %>
   cache:
     <<: *primary_production
     database: authify_production_cache
